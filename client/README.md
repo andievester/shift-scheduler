@@ -1,4 +1,4 @@
-# ConnectRN Shift Scheduler
+# Shift Scheduler
 
 ## Available Scripts
 

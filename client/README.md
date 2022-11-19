@@ -27,7 +27,7 @@ This small application allows the user to set a selected nurse to a selected shi
   - Improve responsive design
 - Accessibilty improvements
   - Respond to different keystrokes (i.e. escape key to exit modal)
-- Added feature ideas
+- Additional feature ideas
   - Column sort could be useful
   - Instead of form validators, shift selector could populate with only the appropriate shifts based on nurse selection and vice versa 
   

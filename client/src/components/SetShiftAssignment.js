@@ -31,9 +31,10 @@ const SetShiftAssignment = ({ setIsOpen, nurseData, shiftData, updateShiftData }
     }
 
     const selectorStyles = {
-        control: (styles, state) => ({ ...styles, backgroundColor: '#FFFFFF', textColor: 'black', border: state.isFocused? '1.5px solid #6366F1' : '1.5px solid black', "&:hover": {
+        control: (styles, state) => ({ ...styles, backgroundColor: '#FFFFFF', textColor: 'black', border: state.isSelected || state.isFocused? '1.5px solid #6366F1' : '1.5px solid black', "&:hover": {
             borderColor: '#6366F1'
-          }}),
+          }
+        }),
         singleValue: (styles) => ({ ...styles, color: 'black'}),
         option: (styles, state) => ({ ...styles, color: state.isSelected ? '#6366F1' : 'black', backgroundColor: state.isFocused ? '#C7D2FE' : 'white'}),
         dropdownIndicator: (styles) => ({ ...styles, color: 'black', "&:hover": {

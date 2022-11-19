@@ -27,7 +27,7 @@
 
 .error {
     padding: 24px;
-    color: red;
+    color: rgb(225 29 72);
     width: 100vw;
 }
 
@@ -98,9 +98,12 @@
   
   .x-button button {
     background-color: transparent;
-    border: none;
-    font-size: 25px;
+    border-radius: 8px;
+    border: 1.25px solid black;
+    padding: 0.3rem;
+    font-size: 20px;
     cursor: pointer;
+    color: black;
   }
   
   .modal-footer {

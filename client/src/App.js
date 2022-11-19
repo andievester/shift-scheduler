@@ -4,7 +4,7 @@ import { getShifts, getNurses } from './utils/ShiftDataMethods';
 import SetShiftAssignment from './components/SetShiftAssignment';
 import './App.scss';
 
-function App() {
+const App = () => {
   const [shiftData, setShiftData] = useState([]);
   const [error, setError] = useState(null);
   const [nurseData, setNurseData] = useState([]);

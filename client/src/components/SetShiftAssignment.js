@@ -115,7 +115,6 @@ const SetShiftAssignment = ({ setIsOpen, nurseData, shiftData, updateShiftData }
                     const errors = {};
                     errors.save = "Error saving assignment.";
                     setFormErrors(errors);
-                    console.log(error);
                 }
             )
     } 

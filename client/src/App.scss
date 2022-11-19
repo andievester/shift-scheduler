@@ -31,17 +31,6 @@
     width: 100vw;
 }
 
-.app-container {
-  width: 100vw;
-  height: 100vh;
-} 
-
-/* .header-container {
-    position: sticky;
-    top: 0;
-    background-color: white;
-} */
-
 .button-container {
     display: flex;
     justify-content: flex-end;
@@ -155,7 +144,13 @@
     }
   }
 
+  .main-error {
+    color: rgb(225 29 72);
+    padding: 14px;
+  }
+
   .error {
     color: rgb(225 29 72);
     font-size: 14px;
+    padding: 0;
   }

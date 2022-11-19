@@ -65,21 +65,26 @@ function App() {
     return new Date(date).toLocaleString();
   }
 
-  shiftData.forEach((shift) => {
-      shift.start = transformDate(shift.start);
-      shift.end = transformDate(shift.end);
-
+  const transformShiftData = (shiftData, nurseData) => {
+    return shiftData.map((shift) => {
       const shiftNurse = nurseData.find((nurse) => nurse.id === shift.nurse_id);
-      if (shiftNurse) {
-          shift.nurse_name = shiftNurse.first_name + " " + shiftNurse.last_name + ", " + shiftNurse.qualification
+
+      return {
+        ...shift,
+        start: transformDate(shift.start),
+        end: transformDate(shift.end),
+        nurse_name: shiftNurse ? shiftNurse.first_name + " " + shiftNurse.last_name + ", " + shiftNurse.qualification : undefined
       }
-  });
+    });
+  }
+
+  const transformedShiftData = transformShiftData(shiftData, nurseData);
 
   if (error) {
-      return <div className="error">Error: Could not fetch data</div>;
+      return <div className="main-error">Error: Could not fetch data; please refresh page</div>;
   } else {
       return (
-        <div className="app-container">
+        <div>
           <div className="button-container">
             <button className="set-shift-button" 
             type="button"
@@ -87,9 +92,9 @@ function App() {
             >Set Shift Assignment
             </button>
           </div>
-          {isOpen && <SetShiftAssignment setIsOpen={setIsOpen} nurseData={nurseData} shiftData={shiftData} updateShiftData={updateShiftData}/>}
+          {isOpen && <SetShiftAssignment setIsOpen={setIsOpen} nurseData={nurseData} shiftData={transformedShiftData} updateShiftData={updateShiftData}/>}
           <div>
-            < ShiftTable columns={columns} data={shiftData}/>
+            < ShiftTable columns={columns} data={transformedShiftData}/>
           </div>
         </div>
       );

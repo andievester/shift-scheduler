@@ -57,6 +57,7 @@ const SetShiftAssignment = ({ setIsOpen, nurseData, shiftData, updateShiftData }
 
         const validateQualification  = "Not qualified for selected shift."
         const validateShiftOverlap = "Overlap with one or more current assigned shifts."
+        const alreadyScheduled = "Already scheduled for selected shift."
 
         const selectedShift = shiftData.find((shift) => shift.id === selectedShiftID);
         const selectedNurse = nurseData.find((nurse) => nurse.id === selectedNurseID);
@@ -82,6 +83,9 @@ const SetShiftAssignment = ({ setIsOpen, nurseData, shiftData, updateShiftData }
                 if ((selectedShiftEnd > assignedShiftStart && selectedShiftEnd < assignedShiftEnd)
                     || (selectedShiftStart > assignedShiftStart && selectedShiftStart < assignedShiftEnd)) {
                         errors.shift = validateShiftOverlap;
+                }
+                if (selectedShiftEnd === assignedShiftEnd && selectedShiftStart === assignedShiftStart) {
+                    errors.nurse = alreadyScheduled;
                 }
             });
         }

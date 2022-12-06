@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import ReactPortal from './ReactPortal';
 import Select from 'react-select';
-import { assignShift } from '../utils/ShiftDataMethods';
+import { assignShift, validateAssignment } from '../utils/ShiftDataMethods';
 
 const SetShiftAssignment = ({ setIsOpen, nurseData, shiftData, updateShiftData }) => {
     const [nurse, setNurse] = useState();
@@ -45,54 +45,13 @@ const SetShiftAssignment = ({ setIsOpen, nurseData, shiftData, updateShiftData }
 
     const handleShiftChange = (e) => {
         setShift(e.value);
-        setFormErrors(validateShiftAssignment(e.value, nurse));
+        setFormErrors(validateAssignment(e.value, nurse, shiftData, nurseData));
     };
 
     const handleNurseChange = (e) => {
         setNurse(e.value);
-        setFormErrors(validateShiftAssignment(shift, e.value));
+        setFormErrors(validateAssignment(shift, e.value, shiftData, nurseData));
     }; 
-
-    const validateShiftAssignment = (selectedShiftID, selectedNurseID) => {
-        let errors = {};
-
-        const validateQualification  = "Not qualified for selected shift."
-        const validateShiftOverlap = "Overlap with one or more current assigned shifts."
-        const alreadyScheduled = "Already scheduled for selected shift."
-
-        const selectedShift = shiftData.find((shift) => shift.id === selectedShiftID);
-        const selectedNurse = nurseData.find((nurse) => nurse.id === selectedNurseID);
-
-        if (selectedShift && selectedShift.qual_required === "RN") {
-            if (selectedNurse && selectedNurse.qualification !== "RN") {
-                errors.nurse = validateQualification ;
-            }
-        } else if (selectedShift && selectedShift.qual_required === "LPN") {
-            if (selectedNurse && selectedNurse.qualification === "CNA") {
-                errors.nurse = validateQualification ;
-            }
-        } 
-
-        let alreadyAssignedShifts = shiftData.filter((s) => s.nurse_id === selectedNurseID);
-        if (selectedShift) {
-            alreadyAssignedShifts.forEach((s) => {
-                const assignedShiftStart = new Date(s.start);
-                const assignedShiftEnd = new Date(s.end);
-                const selectedShiftStart = new Date(selectedShift.start);
-                const selectedShiftEnd = new Date(selectedShift.end);
-    
-                if ((selectedShiftEnd > assignedShiftStart && selectedShiftEnd < assignedShiftEnd)
-                    || (selectedShiftStart > assignedShiftStart && selectedShiftStart < assignedShiftEnd)) {
-                        errors.shift = validateShiftOverlap;
-                }
-                if (selectedShiftEnd === assignedShiftEnd && selectedShiftStart === assignedShiftStart) {
-                    errors.nurse = alreadyScheduled;
-                }
-            });
-        }
-        
-        return errors;
-    } 
 
     const submitForm = () => {
         const requestOptions = {
@@ -127,7 +86,7 @@ const SetShiftAssignment = ({ setIsOpen, nurseData, shiftData, updateShiftData }
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        setFormErrors(validateShiftAssignment(shift, nurse));
+        setFormErrors(validateAssignment(shift, nurse, shiftData, nurseData));
         setIsSubmitting(true);
     };
 
